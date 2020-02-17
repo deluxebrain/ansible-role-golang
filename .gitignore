@@ -1,0 +1,15 @@
+# Python
+*.pyc
+.venv
+
+# Ansible
+*.retry
+
+# Molecule
+*/__pycache__
+
+# IDE's
+.vscode
+
+# Makefile related
+.*_timestamp

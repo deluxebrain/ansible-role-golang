@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts: all
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family | lower == 'debian'
+
+  roles:
+    - role: ansible-role-golang
+      golang_version: 1.13.8
+
+  post_tasks:
+    - name: Verify golang is installed
+      shell: go version   # noqa 305
+      changed_when: false

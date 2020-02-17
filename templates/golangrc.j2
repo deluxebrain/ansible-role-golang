@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+export PATH="$PATH:{{ item.install_dir }}/go/bin"
+{% if go_path is defined and go_path is not none and go_path | length %}
+export GOPATH="{{ go_path }}"
+{% endif %}

@@ -1,0 +1,28 @@
+---
+platform_architecture: "{{ (ansible_architecture == 'x86_64') | ternary('amd64', '386') }}"
+golang_response_processor_regex: "go([0-9\\.]+)\\.{{ ansible_system | lower }}-{{ platform_architecture }}\\.tar\\.gz"
+
+packages:
+  - name: golang
+    install: yes
+    package_name: go
+    version: "{{ golang_version }}"
+    version_lookup_url: https://golang.org/dl/
+    install_dir: "{{ (golang_install_dir is defined \
+      and golang_install_dir is not none \
+      and golang_install_dir | length > 0) | \
+      ternary(golang_install_dir, '/usr/local') }}"
+    version_extractor: >-
+      go/bin/go version | head -n1 | sed -E 's/.*go([0-9\.]+).*/\1/'
+    unarchive: yes
+    dotfile: golangrc
+
+golang_response_processor: "{{ version_lookup_response.content \
+  | regex_findall('' + golang_response_processor_regex + '') \
+  | unique \
+  | sort_versions \
+  | last }}"
+golang_package_url: "https://dl.google.com/go/go\
+  {{ resolved_version }}\
+  .{{ ansible_system | lower }}-\
+  {{ platform_architecture }}.tar.gz"

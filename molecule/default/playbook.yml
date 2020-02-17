@@ -13,5 +13,7 @@
 
   post_tasks:
     - name: Verify golang is installed
-      shell: go version   # noqa 305
+      # noqa 305
+      shell: >-
+        {{ packages["golang"].install_dir }}/{{ packages["golang"].package_path }}/go version
       changed_when: false

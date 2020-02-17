@@ -27,5 +27,5 @@
 
 - name: Install packages
   include: install-package.yml
-  with_items: "{{ packages }}"
-  when: packages | length > 0 and item.install | bool
+  with_dict: "{{ packages }}"
+  when: packages | length > 0 and item.value.install | bool

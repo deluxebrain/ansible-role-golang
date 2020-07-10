@@ -10,8 +10,10 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - 18.04
-        - 19.04
         - 20.04
+    - name: Debian
+      versions:
+        - 10
 
   galaxy_tags:
     - golang

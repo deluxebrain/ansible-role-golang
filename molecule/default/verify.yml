@@ -1,10 +1,8 @@
 - name: Verify
   hosts: all
 
-  # Note: Role variables are not available during molecule test
-  # Therefore must redeclare here
-
   vars:
+    golang_version: "1.13.8"
     packages:
         golang:
           package_path: go/bin
@@ -14,7 +12,7 @@
             ternary(golang_install_dir, '/usr/local') }}"
 
   tasks:
-    - name: "Verify golang is installed"
+    - name: "Verify golang version: {{ golang_version }} is installed"
       # noqa 305
       shell: >-
         {{ packages["golang"].install_dir }}/{{ packages["golang"].package_path }}/go version
@@ -26,6 +24,6 @@
         success_msg: "golang is installed"
 
     - assert:
-        that: "'1.13.8' in golang_version_command.stdout"
-        fail_msg: "golang 1.13.8 is not installed"
-        success_msg: "golang 1.13.8 is installed"
+        that: "'{{ golang_version }}' in golang_version_command.stdout"
+        fail_msg: "golang version: {{ golang_version }} is not installed"
+        success_msg: "golang version: {{ golang_version }} is installed"

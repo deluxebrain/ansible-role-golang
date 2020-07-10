@@ -1,5 +1,5 @@
 ---
-golang_version: latest
+golang_version: "latest"
 
 golang_install_dir: ""
 

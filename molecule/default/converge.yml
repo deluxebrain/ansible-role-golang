@@ -12,4 +12,4 @@
       include_role:
         name: "ansible-role-golang"
       vars:
-        golang_version: 1.13.8
+        golang_version: "1.13.8"

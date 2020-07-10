@@ -1,17 +1,17 @@
 ---
-- name: Load variables for the target system
+- name: "Load variables for the target system"
   include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_os_family | lower }}.yml"
     - default.yml
 
-- name: Set apt to use https
+- name: "Set apt to use https"
   become: yes
   apt:
     name: apt-transport-https
     state: present
 
-- name: Install system dependencies
+- name: "Install system dependencies"
   become: yes
   package:
     name: "{{ item }}"
@@ -21,11 +21,11 @@
   until: result is succeeded
   with_items: "{{ system_dependencies }}"
 
-- name: Set path to .bashrc
+- name: "Set path to .bashrc"
   set_fact:
     bashrc_path: "{{ ansible_env.HOME }}/.bashrc"
 
-- name: Install packages
+- name: "Install packages"
   include: install-package.yml
   with_dict: "{{ packages }}"
   when: packages | length > 0 and item.value.install | bool
